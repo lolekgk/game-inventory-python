@@ -30,14 +30,11 @@ def print_table(inventory, order=None):
 
 def import_inventory(inventory, filename = 'import_inventory.csv'):
     """Import new inventory items from a CSV file."""
-
     with open(filename, "r") as file:
         items_list = file.readline().split(",")
-    print(items_list)
-
     for element in items_list:
         inventory.setdefault(element, items_list.count(element))
-    print(inventory)
+    return inventory
 
 
 def export_inventory(inventory, filename = 'export_inventory.csv'):
