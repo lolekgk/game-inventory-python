@@ -28,13 +28,28 @@ def print_table(inventory, order=None):
     pass
 
 
-def import_inventory(inventory, filename):
+def import_inventory(inventory, filename = 'import_inventory.csv'):
     """Import new inventory items from a CSV file."""
 
-    pass
+    with open(filename, "r") as file:
+        items_list = file.readline().split(",")
+    print(items_list)
+
+    for element in items_list:
+        inventory.setdefault(element, items_list.count(element))
+    print(inventory)
 
 
-def export_inventory(inventory, filename):
+def export_inventory(inventory, filename = 'export_inventory.csv'):
     """Export the inventory into a CSV file."""
 
     pass
+
+
+def main():
+    inventory = {}
+    import_inventory(inventory, 'test_inventory.csv')
+
+
+import_inventory({}, 'test_inventory.csv')
+
