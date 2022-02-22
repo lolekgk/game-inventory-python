@@ -4,12 +4,6 @@
 # according to the requirements.
 
 
-def main():
-    inventory = {'rope': 1, 'torch': 6}
-    removed_items = ['torch', 'torch', 'torch', 'rope']
-    remove_from_inventory(inventory, removed_items)
-
-
 def display_inventory(inventory):
     """Display the contents of the inventory in a simple way."""
 
@@ -43,17 +37,41 @@ def remove_from_inventory(inventory, removed_items):
     return inventory
 
 
+def get_table_columns_width(inventory):
+    first_column_width = len(max(list(inventory.keys()) + ['item name'], key = len))
+    second_column_width = len(str(max(inventory.values())))
+    
+    if len('count') > second_column_width:
+        second_column_width = len('count')
+
+    return first_column_width, second_column_width
+
+
 def print_table(inventory, order=None):
     """
     Display the contents of the inventory in an ordered, well-organized table with
     each column right-aligned.
     """
 
-    pass
+    first_column_width, second_column_width = get_table_columns_width(inventory)
+    
+    if order == 'count,asc':
+        inventory = dict(sorted(inventory.items(), key=lambda item: item[1]))
+    if order == 'count,desc':
+        inventory = dict(sorted(inventory.items(),
+         key=lambda item: item[1], reverse=True))
+        
+    print('-' * (first_column_width + 3) + '-' * second_column_width)
+    print('item name'.rjust(first_column_width) + ' |' + 'count'.rjust(second_column_width+1))
+    print('-' * (first_column_width + 3) + '-' * second_column_width)
+    for key, value in inventory.items():
+        print(key.rjust(first_column_width) + ' |', str(value).rjust(second_column_width))
+    print('-' * (first_column_width + 3) + '-' * second_column_width)
 
 
 def import_inventory(inventory, filename = 'import_inventory.csv'):
     """Import new inventory items from a CSV file."""
+
     try:
         with open(filename, "r") as file:
             items_list = file.readline().split(",")
@@ -66,6 +84,7 @@ def import_inventory(inventory, filename = 'import_inventory.csv'):
 
 def export_inventory(inventory, filename = 'export_inventory.csv'):
     """Export the inventory into a CSV file."""
+
     try:
         items_list = list(inventory.keys())
         with open(filename, "w") as file:
@@ -75,7 +94,3 @@ def export_inventory(inventory, filename = 'export_inventory.csv'):
                 file.write(item)
     except OSError:
         print(f"You don't have permission creating file '{filename}'!")
-
-
-if __name__ == "__main__":
-    main()
