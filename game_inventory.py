@@ -30,6 +30,7 @@ def print_table(inventory, order=None):
 
 def import_inventory(inventory, filename = 'import_inventory.csv'):
     """Import new inventory items from a CSV file."""
+
     with open(filename, "r") as file:
         items_list = file.readline().split(",")
     for element in items_list:
@@ -40,13 +41,12 @@ def import_inventory(inventory, filename = 'import_inventory.csv'):
 def export_inventory(inventory, filename = 'export_inventory.csv'):
     """Export the inventory into a CSV file."""
 
-    pass
+    items_list = list(inventory.keys())
+    with open(filename, "w") as file:
+        for item in items_list:
+            if item != items_list[-1]:
+                item = ((item + '\t') * inventory[item]).replace('\t', ',')
+            file.write(item)
 
 
-def main():
-    inventory = {}
-    import_inventory(inventory, 'test_inventory.csv')
-
-
-import_inventory({}, 'test_inventory.csv')
 
