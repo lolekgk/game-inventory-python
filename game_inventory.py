@@ -5,17 +5,14 @@
 
 
 def main():
-    # inventory = {}
-    # import_inventory(inventory, 'test_inventory.csv')
-    # display_inventory(inventory)
-    # loot = ['sword', 'ork tooth', 'fms', 'fms', 'fms']
     inventory = {'rope': 1, 'torch': 6}
-    added_items = ['torch', 'torch', 'torch', 'fms', 'fms']
-    add_to_inventory(inventory, added_items)
+    removed_items = ['torch', 'torch', 'torch', 'rope']
+    remove_from_inventory(inventory, removed_items)
 
 
 def display_inventory(inventory):
     """Display the contents of the inventory in a simple way."""
+
     if inventory:
         for key, value in inventory.items():
             print(key + ':', value)
@@ -23,17 +20,27 @@ def display_inventory(inventory):
 
 def add_to_inventory(inventory, added_items):
     """Add to the inventory dictionary a list of items from added_items."""
+    
     for item in added_items:
         if item in inventory:
             new_value = inventory[item] + 1
-            inventory.update({item : new_value})  
-        inventory.setdefault(item, added_items.count(item))
+            inventory.update({item : new_value}) 
+        else: 
+            inventory.setdefault(item, added_items.count(item))
     return inventory
     
 
 def remove_from_inventory(inventory, removed_items):
     """Remove from the inventory dictionary a list of items from removed_items."""
-    pass
+    
+    for item in removed_items:
+        if item in inventory:
+            new_value = inventory[item] - 1
+            if new_value == 0:
+                inventory.pop(item)
+            else:
+                inventory.update({item : new_value})  
+    return inventory
 
 
 def print_table(inventory, order=None):
