@@ -4,6 +4,11 @@
 # according to the requirements.
 
 
+def main():
+    inventory = {}
+    import_inventory(inventory, 'test_inventory.csv')
+
+
 def display_inventory(inventory):
     """Display the contents of the inventory in a simple way."""
     pass
@@ -49,4 +54,5 @@ def export_inventory(inventory, filename = 'export_inventory.csv'):
             file.write(item)
 
 
-
+if __name__ == "__main__":
+    main()
