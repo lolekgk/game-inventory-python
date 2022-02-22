@@ -6,13 +6,16 @@
 
 def main():
     inventory = {}
-    import_inventory(inventory, 'test_inventory.csv')
+    imported_inventory = import_inventory(inventory, 'test_inventory.csv')
+    display_inventory(imported_inventory)
 
 
 def display_inventory(inventory):
     """Display the contents of the inventory in a simple way."""
-    pass
-
+    print("Inventory")
+    for k, v in inventory.items():
+        print(k + ':', v)
+    
 
 def add_to_inventory(inventory, added_items):
     """Add to the inventory dictionary a list of items from added_items."""
